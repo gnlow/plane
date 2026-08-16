@@ -2,6 +2,7 @@ import { encode } from "https://gnlow.dev/upng@0.1.0"
 import { arr } from "https://gnlow.dev/util@0.1.0"
 
 export type Coord = [number, number]
+export type Vec4 = [number, number, number, number]
 
 export abstract class ReadablePlane<T> {
     abstract w: number
@@ -9,9 +10,9 @@ export abstract class ReadablePlane<T> {
     abstract get(coord: Coord): T | undefined
     
     grayscale(this: ReadablePlane<number>) {
-        return this.map(x => [x, x, x, x])
+        return this.map(x => x == undefined ? undefined : [x, x, x, x] satisfies Vec4)
     }
-    toPng(this: ReadablePlane<[number, number, number, number]>) {
+    toPng(this: ReadablePlane<Vec4>) {
         return new Uint8Array(encode(
             [new Uint8Array(
                 arr(this.h).flatMap(y =>
