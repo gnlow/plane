@@ -10,7 +10,7 @@ export abstract class ReadablePlane<T> {
     abstract get(coord: Coord): T | undefined
     
     grayscale(this: ReadablePlane<number>) {
-        return this.map(x => x == undefined ? undefined : [x, x, x, x] satisfies Vec4)
+        return this.map(x => x == undefined ? undefined : [x, x, x, 255] satisfies Vec4)
     }
     toPng(this: ReadablePlane<Vec4>) {
         return new Uint8Array(encode(
